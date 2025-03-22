@@ -206,14 +206,14 @@ class ProOE:
 
     def loglikelihood(self, I, U):
         """
-                Calculate the log-likelihood value
-        
-                Parameters:
-                I: Community intensity (type: list, each value corresponds to the intensity of a different community)
-                U: Community membership (type: matrix, each row is a node, each column is a community)
-        
-                Returns:
-                L: Log-likelihood value (type: float)
+            Calculate the log-likelihood value
+    
+            Parameters:
+            I: Community intensity (type: list, each value corresponds to the intensity of a different community)
+            U: Community membership (type: matrix, each row is a node, each column is a community)
+    
+            Returns:
+            L: Log-likelihood value (type: float)
         """
         LE = self.calcu_LE(I, U)
         return LE
@@ -249,29 +249,6 @@ class ProOE:
         U = self.constraint_U(U)
         return U
 
-    # def constraint_U(self, U):
-    #     """
-    #     Constrain U
-    #     """
-    #     # Replace NaN values with 0 and values less than DEFAULT_U_MIN with 0
-    #     U = np.where(np.isnan(U) | (U < DEFAULT_U_MIN), 0, U)
-
-    #     # Find the boolean index of all rows with non-zero sums in U
-    #     non_zero_rows = np.sum(U, axis=1) != 0
-
-    #     # Operate only on non-zero rows
-    #     U_non_zero = U[non_zero_rows]
-
-    #     # Calculate the sum of each row
-    #     row_sums = np.sum(U_non_zero, axis=1, keepdims=True)
-
-    #     # Normalize each row, avoiding division by zero
-    #     U_non_zero = np.divide(U_non_zero, row_sums, where=row_sums != 0)
-
-    #     # Assign the normalized rows back to the original matrix
-    #     U[non_zero_rows] = U_non_zero
-
-    #     return U
     def constraint_U(self, U):
         U = np.where(np.isnan(U) | (U < DEFAULT_U_MIN), 0, U)
         row_sums = U.sum(axis=1, keepdims=True)
@@ -623,8 +600,6 @@ class ProOE:
         # Save spatialunit as a geojson file
         spatialunit.to_file(outputpath + 'U' + name_suffix + '.geojson', driver='GeoJSON', encoding='utf-8')
 
-        # print(self.spatialunit)
-
         # Calculate the corresponding q for the optimal I and U
         q = self.update_q(self.k2best_I[self.K], self.k2best_U[self.K])
         # Save q as a DataFrame with columns O_id, D_id, O_lng, O_lat, D_lng, D_lat, c_1, c_2, ..., c_K
@@ -635,13 +610,9 @@ class ProOE:
                 for k in range(self.K):
                     temp[f'c_{k+1}'] = q[i, j, k]
                 q_list.append(temp)
-                # q_list.append({'O_id': self.Vs[i], 'D_id': self.Vs[j], 'data': q[i, j]})
         q_df = pd.DataFrame(q_list)
-        
         q_df.to_csv(outputpath + 'q' + name_suffix + '.csv', index=False)
 
-
-        # print('\nResults saved successfully!')
         if self.verbose:
             print('\nResults saved successfully!')
     
@@ -693,13 +664,10 @@ class ProOE:
         return Expected_Es
 
 
-
 class MobilityDistribution:
     def __init__(self, dis, inter):
-
         self.interaction = dis.copy(deep=True)
         merged_df = self.interaction.merge(inter[['O_id', 'D_id', 'data']], on=['O_id', 'D_id'], how='left', suffixes=('', '_new'))
-        # Use the update method to update the 'data' column
         self.interaction['data'] = merged_df['data_new'].combine_first(self.interaction['data'])
         self.interaction = self.interaction['data'].values
         self.distance = dis['data'].values
@@ -707,63 +675,124 @@ class MobilityDistribution:
         self.lower_bound = 0.0
         self.params = None
         self.binnums = 50    
-        # Divide distances into bins intervals
         self.bins = np.linspace(self.lower_bound, self.upper_bound, self.binnums)
         self.bin_mids = 0.5 * (self.bins[:-1] + self.bins[1:])
         
-        # Construct data for fitting
+        # Build data for fitting
         self.data = self._construct_data()
+        # Fit both distributions and select the best one
         self.fit()
 
     def _construct_data(self):
-        # Convert distance matrix and interaction matrix to one-dimensional arrays
         distances = np.array(self.distance)
         interactions = np.array(self.interaction)
-        # Count the number of interactions in each interval
         interacttimes = np.zeros(self.binnums - 1)
         for i in range(len(self.bins) - 1):
             interacttimes[i] = interactions[(distances > self.bins[i]) & (distances < self.bins[i + 1])].sum()
-        # Interaction frequency for each interval
         data = interacttimes / interacttimes.sum()
-        # Convert interacttimes to integers
         interacttimes = interacttimes.astype(int)
-        # Construct data for fitting by repeating self.bin_mids according to interacttimes
         self.fitdata = np.repeat(self.bin_mids, interacttimes)
-
         return data
 
+    def _fit_lognormal(self, valid_data):
+        # Use original data for fitting
+        shape, loc, scale = stats.lognorm.fit(valid_data, floc=0)
+        # Calculate predicted values and normalize
+        y_pred = stats.lognorm.pdf(self.bin_mids, shape, loc, scale)
+        y_pred = y_pred / (np.sum(y_pred) * (self.bins[1] - self.bins[0]))
+        r2 = self._calculate_r2(self.data, y_pred)
+        return (shape, loc, scale), r2, 'lognormal'
+
+    def _fit_powerlaw(self, valid_data):
+        # Use original data for fitting
+        shape, loc, scale  = stats.powerlaw.fit(valid_data, floc=0)
+        # Calculate predicted values and normalize
+        y_pred = stats.powerlaw.pdf(self.bin_mids, shape, loc, scale)
+        y_pred = y_pred / (np.sum(y_pred) * (self.bins[1] - self.bins[0]))
+        r2 = self._calculate_r2(self.data, y_pred)
+        return (shape, loc, scale), r2, 'powerlaw'
+
+
+    def _calculate_r2(self, y_true, y_pred):
+
+        # Scale y_true and y_pred to a uniform scale based on maximum values
+        y_true = y_true / np.max(y_true)
+        y_pred = y_pred / np.max(y_pred)
+
+        ss_res = np.sum((y_true - y_pred) ** 2)
+        ss_tot = np.sum((y_true - np.mean(y_true)) ** 2)
+        r2 = 1 - (ss_res / (ss_tot + DEFAULT_EPS))
+        return r2
+
     def fit(self):
-        # Filter out values less than or equal to zero
         valid_data = self.fitdata[self.fitdata > 0]
         if len(valid_data) == 0:
             raise ValueError("All distance values are non-positive after filtering.")
-        # Use scipy.stats.lognorm for fitting
-        shape, loc, scale = stats.lognorm.fit(valid_data, floc=0)
-        self.params = (shape, loc, scale)
+
+        # Fit both distributions
+        self.lognorm_params, self.lognorm_r2, _ = self._fit_lognormal(valid_data)
+        self.powerlaw_params, self.powerlaw_r2, _ = self._fit_powerlaw(valid_data)
+
+        # Select the distribution with higher R²
+        if self.lognorm_r2 > self.powerlaw_r2:
+            self.params = self.lognorm_params
+            self.distribution = 'lognormal'
+            self.r2 = self.lognorm_r2
+        else:
+            self.params = self.powerlaw_params
+            self.distribution = 'powerlaw'
+            self.r2 = self.powerlaw_r2
+        print(f"Selected distribution: {self.distribution} (R² = {self.r2:.4f})")
 
     def print_params(self):
-        print(f"Lognormal params: shape={self.params[0]}, loc={self.params[1]}, scale={self.params[2]}")
+        print(f"Lognormal distribution (R² = {self.lognorm_r2:.4f})")
+        print(f"Parameters: shape={self.lognorm_params[0]:.4f}, loc={self.lognorm_params[1]:.4f}, scale={self.lognorm_params[2]:.4f}")
+        print(f"\nPower law distribution (R² = {self.powerlaw_r2:.4f})")
+        print(f"Parameters: alpha={self.powerlaw_params[0]:.4f}, A={self.powerlaw_params[1]:.4f}")
+        print(f"\nSelected distribution: {self.distribution}")
 
-
-    def predict_PDF(self, x):
-        shape, loc, scale = self.params
-        y = stats.lognorm.pdf(x, shape, loc, scale)
+    def predict_PDF(self, x, dist_type=None):
+        if dist_type is None:
+            dist_type = self.distribution
+            
+        if dist_type == 'lognormal':
+            shape, loc, scale = self.lognorm_params
+            y = stats.lognorm.pdf(x, shape, loc, scale)
+        else:
+            shape, loc, scale = self.params
+            y = stats.powerlaw.pdf(x, shape, loc, scale)
         return y
     
     def plot(self):
-        fig, ax1 = plt.subplots()
+        fig, ax1 = plt.subplots(figsize=(10, 6))
     
-        # Plot the scatter plot of distances
-        ax1.scatter(self.bin_mids, self.data, alpha=0.5, label='Distance')
+        # Plot observed data
+        ax1.scatter(self.bin_mids, self.data, alpha=0.5, label='Observed Data', color='black')
         ax1.set_xlabel('Distance')
         ax1.set_ylabel('Frequency')
     
-        # Create a new axis sharing the same x-axis
+        # Create shared x-axis
         ax2 = ax1.twinx()
-        # Plot the PDF curve
-        distances = np.linspace(self.lower_bound, self.upper_bound, 1000)
-        ax2.plot(distances, self.predict_PDF(distances), 'r-', label='PDF')
-        ax2.set_ylabel('Probability')   
+        
+        # Plot only the better-fitting distribution
+        distances = np.linspace(self.lower_bound + DEFAULT_EPS, self.upper_bound, 1000)
+        
+        # Get PDF for selected distribution
+        pdf = self.predict_PDF(distances)
+        if self.distribution == 'lognormal':
+            ax2.plot(distances, pdf, 'r-', 
+                    label=f'Lognormal (R² = {self.r2:.4f})')
+        else:
+            ax2.plot(distances, pdf, 'b--', 
+                    label=f'Power Law (R² = {self.r2:.4f})')
+        
+        ax2.set_ylabel('Probability Density')   
     
+        # Add legend
+        lines1, labels1 = ax1.get_legend_handles_labels()
+        lines2, labels2 = ax2.get_legend_handles_labels()
+        ax1.legend(lines1 + lines2, labels1 + labels2, loc='upper right')
+    
+        plt.title(f'Distance Distribution Fitting: {self.distribution.capitalize()}')
         fig.tight_layout()
         plt.show()

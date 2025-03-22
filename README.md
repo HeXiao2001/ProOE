@@ -47,12 +47,6 @@ Please note that we tested the code on a PC with a 3.50 GHz CPU and 64 GB memory
 
 ```
 ProOE/
-├── Core4model.png         # Core idea illustration
-├── Framework.png          # Framework overview
-├── demo.ipynb             # Step-by-step demonstration notebook
-├── main.py                # Main script for running the algorithm
-├── visual_utils.py        # Utilities for visualization
-├── README.md              # This file
 ├── data/                  # Data directory
 │   ├── input/             # Input datasets
 │   │   ├── continuous/    # Simulated dataset for testing continuity
@@ -60,9 +54,15 @@ ProOE/
 │   │   ├── heterogeneity/ # Simulated dataset for testing heterogeneity
 │   │   └── NYC_taxi/      # Real-world NYC taxi dataset
 │   └── output/            # Output results organized by dataset
-└── model/                 # Model implementation
-    ├── model.py           # Core ProOE model
-    └── utils.py           # Utility functions for the model
+├── model/                 # Model implementation
+│   ├── model.py           # Core ProOE model
+│   └── utils.py           # Utility functions for the model
+├── demo.ipynb             # Step-by-step demonstration notebook
+├── main.py                # Main script for running the algorithm
+├── Core4model.png         # Core idea illustration
+├── Framework.png          # Framework overview
+├── visual_utils.py        # Utilities for visualization
+└── README.md              # This file
 ```
 
 ## Dataset Description
@@ -104,6 +104,18 @@ BibTeX format:
 }
 ```
 
+Please consider giving it a star ⭐ on GitHub.
+
+## Tips
+
+- **Extensibility**: The ProOE model is highly extensible. By replacing the PDF function (which represents spatial effects in our work), the model can potentially be adapted to various other domains and applications.
+
+- **Scalability Considerations**: While effective for the datasets presented in this paper, the current solving algorithm may face challenges with extremely large-scale datasets. Performance optimizations may be necessary for applications involving massive networks.
+
+- **Future Improvements**: We welcome suggestions and contributions for algorithm improvements, particularly in the areas of computational efficiency and convergence speed. If you have ideas for enhancing the model's performance, please feel free to open an issue or submit a pull request.
+
+- **Parameter Tuning**: For optimal results, experiment with different values of K (number of communities) and alpha (spatial constraint parameter) based on your specific application context.
+
 
 ## Contact
 
@@ -111,7 +123,6 @@ For any questions or suggestions, please contact: [hexiaoemail@csu.edu.cn](mailt
 
 ## Acknowledgments
 We thank Cdlib, NetworkX, Contextily, and other Python open-source libraries for their invaluable support in community detection, network analysis, and map visualization in this study.
-
 
 ## License
 
