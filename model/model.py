@@ -748,9 +748,9 @@ class MobilityDistribution:
         print(f"Lognormal distribution (R² = {self.lognorm_r2:.4f})")
         print(f"Parameters: shape={self.lognorm_params[0]:.4f}, loc={self.lognorm_params[1]:.4f}, scale={self.lognorm_params[2]:.4f}")
         print(f"\nPower law distribution (R² = {self.powerlaw_r2:.4f})")
-        print(f"Parameters: alpha={self.powerlaw_params[0]:.4f}, A={self.powerlaw_params[1]:.4f}")
+        print(f"Parameters: shape={self.powerlaw_params[0]:.4f}, loc={self.powerlaw_params[1]:.4f}, scale={self.powerlaw_params[2]:.4f}")
         print(f"\nSelected distribution: {self.distribution}")
-
+        
     def predict_PDF(self, x, dist_type=None):
         if dist_type is None:
             dist_type = self.distribution
