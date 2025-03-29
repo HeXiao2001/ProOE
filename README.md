@@ -13,7 +13,7 @@ This is the implementation of Paper: "A Probabilistic Optimal Estimation Method 
 
 ProOE (Probabilistic Optimal Estimation) is a novel approach for detecting spatial fuzzy communities. The algorithm utilizes a probabilistic framework to identify community structures with fuzzy boundaries in spatial networks. It is particularly useful for analyzing urban mobility patterns, transportation networks, and social interactions in geographic space.
 
-![Framework of ProOE](Framework.png)
+![Framework of ProOE](Framework.jpg)
 
 
 
