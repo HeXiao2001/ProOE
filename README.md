@@ -34,13 +34,11 @@ Please note that we tested the code on a PC with a 3.50 GHz CPU and 64 GB memory
 ## Requirements
 - python 3.12.5
 - numpy
-- pandas
 - geopandas
 - matplotlib
 - scipy
 - mpl_toolkits
 - termcolor
-- hdbscan
 - Contextily
 
 ## Project Structure
