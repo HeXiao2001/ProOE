@@ -49,7 +49,7 @@ if __name__ == '__main__':
     # args.K = 10
     
     print('Reading raw data...')
-    Vs = gpd.read_file(f'./data/input/{args.dataset}/SpatialUnit.geojson', dtype={args.unitid_name: str})
+    Vs = gpd.read_file(f'./data/input/{args.dataset}/SpatialUnit.geojson')
     Vs[args.unitid_name] = Vs[args.unitid_name].astype(str)
     Es = pd.read_csv(f'./data/input/{args.dataset}/Flows' + args.Flows_suffix + '.csv', dtype={args.Oid_name: str, args.Did_name: str, args.flow_name: float})
     Ds = pd.read_csv(f'./data/input/{args.dataset}/Distances.csv', dtype={args.Oid_name: str, args.Did_name: str , args.distance_name: float})
