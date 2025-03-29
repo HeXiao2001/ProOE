@@ -21,9 +21,10 @@ parser.add_argument('--max_iter', default=200, help='The maximum number of itera
 parser.add_argument('--min_iter', default=20, help='The minimum number of iterations to fit the model')
 parser.add_argument('--num_realizations', default=2, help='The number of realizations to run')
 
-parser.add_argument('--K', default=4, help='The number of communities to detect') # 4
+parser.add_argument('--K', default=4, help='The number of communities to detect') # None or int  # None: the number of communities is determined by the model itself; int: the number of communities is fixed.
+parser.add_argument('--max_k', type=int, default=20, help='The maximum number of communities to detect(when K is None)')  # 20
 
-parser.add_argument('--spatial_continuity_method', default= 'Adj' , help='The method for spatial continuity constrains, including geographic adjacency(Adj) and spatial clusting(HDBSCAN)')  # Adj, HDBSCAN
+parser.add_argument('--spatial_continuity_method', default= 'Adj', help='The method for spatial continuity constrains, including geographic adjacency(Adj) and spatial clusting(HDBSCAN)')  # Adj, HDBSCAN
 parser.add_argument('--alpha', default=2, help='The parameter used for spatial continuity guidance')  # 2
 
 parser.add_argument('--seed', default=None, help='The random seed to use')   # None
@@ -59,7 +60,7 @@ if __name__ == '__main__':
     Es_p, Distances_p, Adj_p, Vs_p, Vs_coord_p = utils.pre_data(Vs, Es, Ds, args)   
 
     print('Running ProOE...')
-    ProOE_model = ProOE(Es_p, Distances_p, Adj_p, Vs_p, Vs_coord_p, args.K, max_iter=args.max_iter, spatial_continuity_method = args.spatial_continuity_method, alpha = args.alpha, min_iter= args.min_iter, num_realizations=args.num_realizations, seed=args.seed, verbose=args.verbose)
+    ProOE_model = ProOE(Es_p, Distances_p, Adj_p, Vs_p, Vs_coord_p, args.K, max_iter=args.max_iter, spatial_continuity_method = args.spatial_continuity_method, alpha = args.alpha, min_iter= args.min_iter, max_k=args.max_k, num_realizations=args.num_realizations, seed=args.seed, verbose=args.verbose)
 
     print('Saving results...')
     ProOE_model.save_result(Vs, args.unitid_name,f'./data/output/{args.dataset}/', args.Flows_suffix+'_'+str(args.K))
