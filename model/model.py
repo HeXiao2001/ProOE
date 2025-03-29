@@ -7,7 +7,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import time
 import os
-import hdbscan
+from sklearn.cluster import HDBSCAN
 from termcolor import colored
 import numpy as np
 import matplotlib.pyplot as plt
@@ -285,10 +285,8 @@ class ProOE:
             # Extract the corresponding coordinates from self.Vs_coord
             coord = [self.Vs_coord[i] for i in U_k_non_zero_index]
             # Use hdbscan for clustering
-            clusterer = hdbscan.HDBSCAN(min_cluster_size=3, gen_min_span_tree=True)
-            clusterer.fit(coord)
-            # Extract clustering results
-            labels = clusterer.labels_
+            clusterer = HDBSCAN(min_cluster_size=3)
+            labels = clusterer.fit_predict(coord)
 
             # Extract the number of clusters
             n_clusters = len(set(labels)) - (1 if -1 in labels else 0)
