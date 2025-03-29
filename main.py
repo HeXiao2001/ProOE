@@ -12,8 +12,8 @@ parser.add_argument('--Flows_suffix', default='', help='The suffix of the Flows 
 parser.add_argument('--flow_threshold', default=0, help='The threshold of flow to filter out the flows')  # 0
 
 parser.add_argument('--unitid_name', default='LocationID', help='The name of the column that contains the unit id in spatialunit.geojson')
-parser.add_argument('--Oid_name', default='O_id', help='The name of the column that contains the origin id in flow.csv')
-parser.add_argument('--Did_name', default='D_id', help='The name of the column that contains the destination id in flow.csv')
+parser.add_argument('--Oid_name', default='O_id', help='The name of the column that contains the origin id in flow.csv|distance.csv')
+parser.add_argument('--Did_name', default='D_id', help='The name of the column that contains the destination id in flow.csv|distance.csv')
 parser.add_argument('--flow_name', default='flow', help='The name of the column that contains the flow in flow.csv')
 parser.add_argument('--distance_name', default='distance', help='The name of the column that contains the distance in distance.csv')
 
