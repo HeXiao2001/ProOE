@@ -269,12 +269,12 @@ class ProOE:
 
     def constraint_spatial_HDBSCAN(self, U):
         """
-                Spatial constraint
-                Traverse each type of community
-                For each type of community, extract all nodes belonging to that community
-                Cluster these nodes based on the HDBSCAN algorithm
-                Compare the mean probability of belonging to the community for each cluster, and select the cluster with the highest mean probability
-                Set the probability of nodes not belonging to this cluster to zero for that community
+        Spatial constraint
+        Traverse each type of community
+        For each type of community, extract all nodes belonging to that community
+        Cluster these nodes based on the HDBSCAN algorithm
+        Compare the mean probability of belonging to the community for each cluster, and select the cluster with the highest mean probability
+        Set the probability of nodes not belonging to this cluster to zero for that community
         """
         for k in range(self.K):
             U_k = U[:, k]
@@ -310,7 +310,7 @@ class ProOE:
         """
         Spatial constraint, use geographic adjacency constrains to adjust the membership matrix U
         Traverse each community
-        For each community, extract all nodes belonging to that community with membership greater than 0.2
+        For each community, extract all nodes belonging to that community with membership greater than 0.1
         Generate all connected graphs based on the adjacency matrix
         Compare the sum of membership for each connected graph, and select the connected graph with the highest sum
         The membership of nodes not belonging to this connected graph is divided by alpha

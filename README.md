@@ -1,6 +1,6 @@
 # ProOE
 
-This is the implementation of Paper: "A Probabilistic Optimal Estimation Method for Detecting Spatial Fuzzy Communities" (IJGIS, 2025).
+This is the implementation of the paper: "A Probabilistic Optimal Estimation Method for Detecting Spatial Fuzzy Communities" (IJGIS, 2025).
 
 <a href="链接到论文的URL"><img alt="Paper" src="https://img.shields.io/badge/Paper-PDF-red"></a>&nbsp;&nbsp;&nbsp;<a href="https://github.com/HeXiao2001/ProOE/tree/main/data/input"><img alt="Dataset" src="https://img.shields.io/badge/Dataset-Download-blue"></a>&nbsp;&nbsp;&nbsp;<a href="https://github.com/HeXiao2001/ProOE/tree/main?tab=MIT-1-ov-file"><img alt="License" src="https://img.shields.io/badge/License-MIT-green"></a>
     
@@ -21,22 +21,27 @@ ProOE (Probabilistic Optimal Estimation) is a novel approach for detecting spati
 
 There are two ways to run the code:
 
-1. (Recommended)You can run the `demo.ipynb` file, which includes the step-by-step instructions to reproduce findings reported in the manuscript. The processing and visualization of the New York City taxi dataset and three simulated datasets are organized in it. Visualizations include spatial fuzzy community division results, Trip Matrix, Confidence Index, and Certainty Index. 
+1. **(Recommended)** Run the `demo.ipynb` file, which includes step-by-step instructions to reproduce the findings reported in our manuscript. The processing and visualization of the New York City taxi dataset and three simulated datasets are organized within this notebook. Visualizations include spatial fuzzy community division results, Trip Matrix, Confidence Index, and Certainty Index. 
 
-2. Alternatively, you can run the `main.py` file. The New York City taxi dataset and three simulated datasets are also available, and you can easily switch between datasets.
+2. Alternatively, run the `main.py` file. The New York City taxi dataset and three simulated datasets are also available, and you can easily switch between them.
+  
+    - To run the code, use the command: `python main.py --dataset <dataset_name> --K <number_of_communities>`
+    - Replace `<dataset_name>` with the name of the dataset you want to use (e.g., `NYC_taxi`, `continuous`, `fuzziness`, or `heterogeneity`).
+    - Replace `<number_of_communities>` with the desired number of communities (e.g., 3).
+    - Additional instructions on related running parameters are documented in `main.py`, which you can check if needed.
 
-The results are saved in the `./data/output` directory, organized by dataset name. You can open this directory to view the detailed data.
+The results will be saved in the `./data/output` directory, organized by dataset name. You can navigate to this directory to view the detailed output data.
 
-Please note that we tested the code on a PC with a 3.50 GHz CPU and 64 GB memory running the Windows 11 operating system. Different device conditions may affect the results.
 
+Please note that we tested the code on a PC with a 3.50 GHz CPU and 64 GB memory running the Windows 11 operating system. Different hardware configurations may affect performance and results.
 
 
 ## Requirements
-- python 3.12.5
-- numpy
-- geopandas
-- matplotlib
-- scipy
+- Python 3.12.5
+- NumPy
+- GeoPandas
+- Matplotlib
+- SciPy
 - mpl_toolkits
 - termcolor
 - Contextily
@@ -81,7 +86,7 @@ Each dataset contains three key files:
 
 ## Citation
 
-If you find this code or work helpful for your research, please cite our paper:
+If you find this code or work helpful for your research, please cite our paper and consider giving it a star ⭐ on GitHub:
 
 ```
 Author, A., Author, B., & Author, C. (2023). A Probabilistic Optimal Estimation Method for Detecting Spatial Fuzzy Communities. Journal Name, Volume(Issue), Pages.
@@ -102,11 +107,9 @@ BibTeX format:
 }
 ```
 
-Please consider giving it a star ⭐ on GitHub.
-
 ## Tips
 
-- **Extensibility**: The ProOE model is highly extensible. By replacing the PDF function (which represents spatial effects in our work), the model can potentially be adapted to various other domains and applications.
+- **Extensibility**: The ProOE model is highly extensible. By modifying the PDF function (which represents spatial effects in our work), the model can potentially be adapted to various other domains and applications.
 
 - **Scalability Considerations**: While effective for the datasets presented in this paper, the current solving algorithm may face challenges with extremely large-scale datasets. Performance optimizations may be necessary for applications involving massive networks.
 
@@ -120,7 +123,7 @@ Please consider giving it a star ⭐ on GitHub.
 For any questions or suggestions, please contact: [hexiaoemail@csu.edu.cn](mailto:hexiaoemail@csu.edu.cn)
 
 ## Acknowledgments
-We thank Cdlib, NetworkX, Contextily, and other Python open-source libraries for their invaluable support in community detection, network analysis, and map visualization in this study.
+We thank CDlib, NetworkX, Contextily, and other Python open-source libraries for their invaluable support in community detection, network analysis, and map visualization in this study.
 
 ## License
 
