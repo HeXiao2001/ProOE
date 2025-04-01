@@ -1,20 +1,16 @@
 # ProOE
+<a href="链接到论文的URL"><img alt="Paper" src="https://img.shields.io/badge/Paper-PDF-red"></a>&nbsp;&nbsp;&nbsp;<a href="https://github.com/HeXiao2001/ProOE/tree/main/data/input"><img alt="Dataset" src="https://img.shields.io/badge/Dataset-Download-blue"></a>&nbsp;&nbsp;&nbsp;<a href="https://github.com/HeXiao2001/ProOE/tree/main?tab=MIT-1-ov-file"><img alt="License" src="https://img.shields.io/badge/License-MIT-green"></a>
 
 This is the implementation of the paper: "A Probabilistic Optimal Estimation Method for Detecting Spatial Fuzzy Communities" (IJGIS, 2025).
 
-<a href="链接到论文的URL"><img alt="Paper" src="https://img.shields.io/badge/Paper-PDF-red"></a>&nbsp;&nbsp;&nbsp;<a href="https://github.com/HeXiao2001/ProOE/tree/main/data/input"><img alt="Dataset" src="https://img.shields.io/badge/Dataset-Download-blue"></a>&nbsp;&nbsp;&nbsp;<a href="https://github.com/HeXiao2001/ProOE/tree/main?tab=MIT-1-ov-file"><img alt="License" src="https://img.shields.io/badge/License-MIT-green"></a>
-    
+ProOE (Probabilistic Optimal Estimation) is a novel approach for detecting spatial fuzzy communities. The algorithm utilizes a probabilistic framework to identify community structures with fuzzy boundaries in spatial networks. It is particularly useful for analyzing urban mobility patterns, transportation networks, and social interactions in geographic space.
+
 ![Illustration of the core idea of the model](Core4model.png)
 
 
+## Spatial Fuzzy Community Detection Demonstration Video
 
-
-## Model Overview
-
-ProOE (Probabilistic Optimal Estimation) is a novel approach for detecting spatial fuzzy communities. The algorithm utilizes a probabilistic framework to identify community structures with fuzzy boundaries in spatial networks. It is particularly useful for analyzing urban mobility patterns, transportation networks, and social interactions in geographic space.
-
-![Framework of ProOE](Framework.jpg)
-
+<video src="NYC_taxi_community_evolution30.mp4" controls width="100%"></video>
 
 
 ## Running Examples
@@ -64,6 +60,7 @@ ProOE/
 ├── main.py                # Main script for running the algorithm
 ├── Core4model.png         # Core idea illustration
 ├── Framework.png          # Framework overview
+├── NYC****.mp4            # Demonstration video
 ├── visual_utils.py        # Utilities for visualization
 └── README.md              # This file
 ```
