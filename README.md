@@ -10,7 +10,7 @@ ProOE (Probabilistic Optimal Estimation) is a novel approach for detecting spati
 
 ## Spatial Fuzzy Community Detection Demonstration Video
 
-<video src="NYC_taxi_community_evolution30.mp4" controls width="100%"></video>
+<video src="https://github.com/HeXiao2001/ProOE/blob/main/NYC_taxi_community_evolution30.mp4" controls width="100%"></video>
 
 
 ## Running Examples
