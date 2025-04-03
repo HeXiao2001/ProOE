@@ -1,5 +1,5 @@
 # ProOE
-<a href="链接到论文的URL"><img alt="Paper" src="https://img.shields.io/badge/Paper-PDF-red"></a>&nbsp;&nbsp;&nbsp;<a href="https://github.com/HeXiao2001/ProOE/tree/main/data/input"><img alt="Dataset" src="https://img.shields.io/badge/Dataset-Download-blue"></a>&nbsp;&nbsp;&nbsp;<a href="https://github.com/HeXiao2001/ProOE/tree/main?tab=MIT-1-ov-file"><img alt="License" src="https://img.shields.io/badge/License-MIT-green"></a>
+<a href="https://www.tandfonline.com/doi/abs/10.1080/13658816.2025.2483850?sessionid="><img alt="Paper" src="https://img.shields.io/badge/Paper-PDF-red"></a>&nbsp;&nbsp;&nbsp;<a href="https://github.com/HeXiao2001/ProOE/tree/main/data/input"><img alt="Dataset" src="https://img.shields.io/badge/Dataset-Download-blue"></a>&nbsp;&nbsp;&nbsp;<a href="https://github.com/HeXiao2001/ProOE/tree/main?tab=MIT-1-ov-file"><img alt="License" src="https://img.shields.io/badge/License-MIT-green"></a>
 
 This is the implementation of the paper: "A Probabilistic Optimal Estimation Method for Detecting Spatial Fuzzy Communities" (IJGIS, 2025).
 
@@ -84,22 +84,7 @@ Each dataset contains three key files:
 If you find this code or work helpful for your research, please cite our paper and consider giving it a star ⭐ on GitHub:
 
 ```
-Author, A., Author, B., & Author, C. (2023). A Probabilistic Optimal Estimation Method for Detecting Spatial Fuzzy Communities. Journal Name, Volume(Issue), Pages.
-```
-
-BibTeX format:
-
-```bibtex
-@article{author2023probabilistic,
-  title={A Probabilistic Optimal Estimation Method for Detecting Spatial Fuzzy Communities},
-  author={Author, A. and Author, B. and Author, C.},
-  journal={Journal Name},
-  volume={Volume},
-  number={Issue},
-  pages={Pages},
-  year={2023},
-  publisher={Publisher}
-}
+He, X., Liu, B., Shi, Y., Tang, Z., Deng, M., & Tang, J. (2025). A probabilistic optimal estimation method for detecting spatial fuzzy communities. International Journal of Geographical Information Science, 1–33. https://doi.org/10.1080/13658816.2025.2483850
 ```
 
 ## Tips
