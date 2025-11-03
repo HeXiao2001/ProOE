@@ -100,7 +100,7 @@ He, X., Liu, B., Shi, Y., Tang, Z., Deng, M., & Tang, J. (2025). A probabilistic
 
 ## Contact
 
-For any questions or suggestions, please contact: [hexiaoemail@csu.edu.cn](mailto:hexiaoemail@csu.edu.cn)
+For any questions or suggestions, please contact: [xiao.he2001@outlook.com](mailto:xiao.he2001@outlook.com)
 
 ## Acknowledgments
 We thank CDlib, NetworkX, Contextily, and other Python open-source libraries for their invaluable support in community detection, network analysis, and map visualization in this study.
